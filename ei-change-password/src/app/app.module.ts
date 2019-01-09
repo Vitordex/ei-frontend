@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatProgressSpinnerModule, MatButtonModule, MatCardModule } from '@angular/material';
+import { MatInputModule, MatProgressSpinnerModule, MatButtonModule, MatCardModule, MatTooltipModule, MatSnackBarModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -23,6 +23,8 @@ import { RouterModule } from '@angular/router';
     MatProgressSpinnerModule,
     MatButtonModule,
     MatCardModule,
+    MatTooltipModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
