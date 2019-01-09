@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ChangePasswordService } from '../change-password-service/change-password.service';
 import { ActivatedRoute } from '@angular/router';
+import { CustomValidators } from './custom-validators.directive';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-change-password-form',
@@ -14,16 +16,25 @@ export class ChangePasswordFormComponent implements OnInit {
   authToken = '';
 
   passwordControl = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.maxLength(40),
+    Validators.minLength(8),
+    CustomValidators.atLeastOneSpecial,
+    CustomValidators.atLeastOneLowercase,
+    CustomValidators.atLeastOneUppercase,
+    CustomValidators.atLeastOneNumber
   ]);
 
   confirmControl = new FormControl('', [
-    Validators.required
+    Validators.required,
+    CustomValidators.equal(this.passwordControl)
   ])
 
-  constructor(private service: ChangePasswordService, private route: ActivatedRoute) {
-
-  }
+  constructor(
+    private service: ChangePasswordService,
+    private route: ActivatedRoute,
+    public snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.route.queryParamMap.subscribe((params) => {
@@ -46,21 +57,36 @@ export class ChangePasswordFormComponent implements OnInit {
   async onSend() {
     this.mode = 'indeterminate';
 
+    let message: string = 'Senha alterada com sucesso';
+    const action: string = 'OK';
+    let config = new MatSnackBarConfig();
+    config.panelClass = ['success'];
+
     try {
-      const result = await this.service.patchRecoverPassword(
+      await this.service.patchRecoverPassword(
         this.passwordControl.value,
         this.authToken
-      ).toPromise(); 
+      ).toPromise();
     } catch (error) {
+      config.panelClass = ['fail']
+      config.duration = 10000;
       switch (error.status) {
-        case 404:
-          console.log('Die');
+        case 401:
+          message = 'Há um problema com seu token';
           break;
-      
+        case 400:
+          message = 'Houve um erro, repita o processo';
+          break;
+        case 500:
+          message = 'Não foi possível salvar sua senha. Tente novamente';
+          break;
         default:
+          message = 'Houve um erro';
           break;
       }
     }
+
+    this.snackBar.open(message, action, config);
 
     this.mode = 'determinate';
   }
