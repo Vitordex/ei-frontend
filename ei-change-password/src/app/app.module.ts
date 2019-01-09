@@ -7,6 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ChangePasswordFormComponent } from './change-password-form/change-password-form.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ChangePasswordService } from './change-password-service/change-password.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,9 +23,17 @@ import { ChangePasswordFormComponent } from './change-password-form/change-passw
     MatProgressSpinnerModule,
     MatButtonModule,
     MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      {
+        path: '', component: ChangePasswordFormComponent
+      }
+    ])
   ],
-  providers: [],
+  providers: [
+    ChangePasswordService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
