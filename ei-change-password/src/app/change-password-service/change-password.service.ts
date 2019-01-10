@@ -14,10 +14,9 @@ export class ChangePasswordService {
   patchRecoverPassword(password, authToken) {
     const body = { password };
     const routeUrl = `${this.baseUrl}/auth/change/password`;
-    const headers = new HttpHeaders();
-    headers.set('x-authentication-token', authToken);
+    const headers = new HttpHeaders({'x-authentication-token': authToken});
     const options = { headers };
 
-    return this.http.patch(routeUrl, password, options);
+    return this.http.patch(routeUrl, body, options);
   }
 }

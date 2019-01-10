@@ -38,7 +38,7 @@ export class ChangePasswordFormComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParamMap.subscribe((params) => {
-      this.authToken = params.get('token');
+      this.authToken = params.get('token') || this.authToken;
     });
   }
 
