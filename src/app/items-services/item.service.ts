@@ -15,9 +15,11 @@ export class ItemService {
   public getItems(authToken: string, itemName: string): Promise<any> {
     const url = `${this.baseUrl}/${itemName}/`;
     const headers = new HttpHeaders({ [Constants.TOKEN_HEADER]: authToken });
-    const options = { headers };
 
-    return this.http.get(url, options).toPromise();
+    return this.http.get(url, { 
+      headers, 
+      observe: 'body' 
+    }).toPromise();
   }
 
   public deleteItem(itemId: string, authToken: string, itemName: string) {
