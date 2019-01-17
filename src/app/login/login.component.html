@@ -1,3 +1,34 @@
-<p>
-  login works!
-</p>
+<div class="main-div">
+    <mat-card class="form-card center">
+      <mat-card-header>
+        <div mat-card-avatar class="header-form-card-image"></div>
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-subtitle>Formulário de acesso</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <mat-form-field class="form-input-full-width expand-bottom">
+            <input matInput placeholder="E-mail" type="email" (keyup)="validateForm()" [formControl]="emailControl">
+            <mat-error *ngIf="emailControl.hasError('required')">
+              Este campo é requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-input-full-width">
+            <input matInput placeholder="Senha" type="password" (keyup)="validateForm()" [formControl]="passwordControl">
+            <mat-error *ngIf="passwordControl.hasError('required')">
+              Este campo é requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div>
+          <button mat-raised-button class="orange-action-button" matTooltip="Login" [disabled]="!validForm" (click)="login()">Login</button>
+          <mat-progress-spinner diameter="35" [mode]="mode" class="login-form-spinner-margin">
+          </mat-progress-spinner>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
