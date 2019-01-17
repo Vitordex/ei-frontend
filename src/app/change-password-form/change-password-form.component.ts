@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ChangePasswordService } from '../change-password-service/change-password.service';
 import { ActivatedRoute } from '@angular/router';
 import { CustomValidators } from './custom-validators.directive';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-change-password-form',
@@ -31,7 +31,7 @@ export class ChangePasswordFormComponent implements OnInit {
   ])
 
   constructor(
-    private service: ChangePasswordService,
+    private service: AuthService,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar
   ) { }
@@ -42,7 +42,7 @@ export class ChangePasswordFormComponent implements OnInit {
     });
   }
 
-  validateForm() {
+  public validateForm() {
     const inputsHasErrors =
       this.confirmControl.errors != null ||
       this.passwordControl.errors != null;
@@ -54,7 +54,7 @@ export class ChangePasswordFormComponent implements OnInit {
     this.validForm = !inputsHasErrors && inputsDirty;
   }
 
-  async onSend() {
+  public async onSend() {
     this.mode = 'indeterminate';
 
     let message: string = 'Senha alterada com sucesso';
