@@ -23,7 +23,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChangePasswordService } from './change-password-service/change-password.service';
 import { RouterModule, Route } from '@angular/router';
 import { ItemsComponent } from './items/items.component';
-import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -33,7 +32,7 @@ const routes: Route[] = [
     path: 'change/password', component: ChangePasswordFormComponent
   },
   {
-    path: 'items', component: ItemsComponent//, canActivate: [AuthGuardService]
+    path: 'items', component: ItemsComponent, canActivate: [AuthGuardService]
   },
   {
     path: 'login', component: LoginComponent
@@ -48,7 +47,6 @@ const routes: Route[] = [
     AppComponent,
     ChangePasswordFormComponent,
     ItemsComponent,
-    HomeComponent,
     LoginComponent,
     NotFoundComponent
   ],
