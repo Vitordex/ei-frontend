@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Constants } from 'src/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -7,23 +8,29 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   private baseUrl: string;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.baseUrl = window.location.origin;
   }
 
-  isAuthenticated(): boolean{
+  public isAuthenticated(): boolean {
     const token = sessionStorage.getItem('token');
 
     return !!token;
   }
 
-  login(email: string, password: string): Promise<any>{
+  public login(email: string, password: string): Promise<any> {
     const url = `${this.baseUrl}/auth/login`;
-    const body = {
-      email,
-      password
-    };
+    const body = { email, password };
 
     return this.http.post(url, body).toPromise();
+  }
+
+  public patchRecoverPassword(password: string, authToken: string) {
+    const body = { password };
+    const routeUrl = `${this.baseUrl}/auth/change/password`;
+    const headers = new HttpHeaders({ [Constants.TOKEN_HEADER]: authToken });
+    const options = { headers };
+
+    return this.http.patch(routeUrl, body, options);
   }
 }

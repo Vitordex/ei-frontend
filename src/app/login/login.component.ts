@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
+import { Constants } from 'src/constants';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,6 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private TOKEN_HEADER: string = 'x-authentication-token';
   public emailControl = new FormControl('', [Validators.required]);
   public passwordControl = new FormControl('', [Validators.required]);
 
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       throw error;
     }
 
-    const token = response.headers.get(this.TOKEN_HEADER);
-    sessionStorage.setItem(this.TOKEN_HEADER, token);
+    const token = response.headers.get(Constants.TOKEN_HEADER);
+    sessionStorage.setItem(Constants.TOKEN_HEADER, token);
   }
 }
