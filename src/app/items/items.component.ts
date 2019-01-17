@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { ItemService } from '../items-services/item.service';
+import { Constants } from 'src/constants';
 
 interface Item {
   id: string,
@@ -27,7 +28,7 @@ export class ItemsComponent implements OnInit {
   constructor(private service: ItemService) { }
 
   private getToken(){
-    return sessionStorage.getItem('token');
+    return sessionStorage.getItem(Constants.TOKEN_HEADER);
   }
 
   async ngOnInit() {
@@ -35,6 +36,7 @@ export class ItemsComponent implements OnInit {
     
     try {
       this.itemsList = await this.service.getItems(token, this.itemName); 
+      console.log(this.itemsList);
     } catch (error) {
       throw error;
     }
