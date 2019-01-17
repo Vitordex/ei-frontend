@@ -26,16 +26,18 @@ import { ItemsComponent } from './items/items.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthService } from './auth/auth.service';
+import { ItemService } from './items-services/item.service';
 
 const routes: Route[] = [
   {
-    path: 'change/password', component: ChangePasswordFormComponent
+    path: 'frontend/change/password', component: ChangePasswordFormComponent
   },
   {
-    path: 'items', component: ItemsComponent, canActivate: [AuthGuardService]
+    path: 'frontend/items', component: ItemsComponent, canActivate: [AuthGuardService]
   },
   {
-    path: 'login', component: LoginComponent
+    path: 'frontend/login', component: LoginComponent
   },
   {
     path: '**', component: NotFoundComponent
@@ -68,7 +70,9 @@ const routes: Route[] = [
     RouterModule.forRoot(routes)
   ],
   providers: [
-    ChangePasswordService
+    ChangePasswordService,
+    AuthService,
+    ItemService
   ],
   bootstrap: [AppComponent]
 })

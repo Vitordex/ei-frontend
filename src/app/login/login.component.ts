@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   public async login() {
     this.mode = 'indeterminate';
 
-    let message: string = 'Senha alterada com sucesso';
+    let message: string = 'Login realizado';
     const action: string = 'OK';
     let config = new MatSnackBarConfig();
     config.panelClass = ['success'];
@@ -85,6 +85,6 @@ export class LoginComponent implements OnInit {
 
     const token = response.headers.get(Constants.TOKEN_HEADER);
     sessionStorage.setItem(Constants.TOKEN_HEADER, token);
-    this.router.navigate(['items']);
+    this.router.navigate(['frontend/items']);
   }
 }

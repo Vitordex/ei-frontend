@@ -27,7 +27,7 @@ export class ItemsComponent implements OnInit {
   constructor(private service: ItemService) { }
 
   private getToken(){
-    return sessionStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkwNzg2MmViZTkxMjQiLCJpYXQiOjE1NDc2ODE2NzYsImV4cCI6MTU0NzY4MTY3Niwic3ViIjoiYXV0aCJ9.3g66OdbK8vpaJqo5p9YdTaSCrjCxg-kO_-XP8sqQqXI';
+    return sessionStorage.getItem('token');
   }
 
   async ngOnInit() {

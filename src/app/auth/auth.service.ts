@@ -22,7 +22,10 @@ export class AuthService {
     const url = `${this.baseUrl}/auth/login`;
     const body = { email, password };
 
-    return this.http.post(url, body).toPromise();
+    return this.http.post(url, body, {
+      observe: 'response',
+      responseType: 'arraybuffer'
+    }).toPromise();
   }
 
   public patchRecoverPassword(password: string, authToken: string) {
