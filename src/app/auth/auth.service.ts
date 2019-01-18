@@ -12,6 +12,10 @@ export class AuthService {
     this.baseUrl = window.location.origin;
   }
 
+  public clearToken(){
+    sessionStorage.clear();
+  }
+
   public isAuthenticated(): boolean {
     const token = sessionStorage.getItem(Constants.TOKEN_HEADER);
 
