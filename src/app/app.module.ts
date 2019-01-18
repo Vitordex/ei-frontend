@@ -28,19 +28,21 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthService } from './auth/auth.service';
 import { ItemService } from './items-services/item.service';
+import { ItemsPageComponent } from './items-page/items-page.component';
+import { Constants } from 'src/constants';
 
 const routes: Route[] = [
   {
-    path: 'frontend/change/password', component: ChangePasswordFormComponent
+    path: Constants.ROUTES.CHANGE_PASSWORD, component: ChangePasswordFormComponent
   },
   {
-    path: 'frontend/items', component: ItemsComponent, canActivate: [AuthGuardService]
+    path: Constants.ROUTES.ITEMS, component: ItemsComponent, canActivate: [AuthGuardService]
   },
   {
-    path: 'frontend/login', component: LoginComponent
+    path: Constants.ROUTES.LOGIN, component: LoginComponent
   },
   {
-    path: '**', component: NotFoundComponent
+    path: Constants.ROUTES.ALL, component: NotFoundComponent
   }
 ];
 
@@ -50,7 +52,8 @@ const routes: Route[] = [
     ChangePasswordFormComponent,
     ItemsComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ItemsPageComponent
   ],
   imports: [
     BrowserModule,
