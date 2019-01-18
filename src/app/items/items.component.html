@@ -1,6 +1,6 @@
 <input type="file" id="inputCsv" accept="text/csv" (change)="uploadFile($event.target.files);" hidden #inputCsv />
 <div style="margin:5px;">
-  <button mat-raised-button (click)="openFileDialog();" class="inline" style="margin: 5px;">Upload</button>
+  <button mat-raised-button (click)="openFileDialog();" class="inline orange-action-button" style="margin: 5px;">Upload</button>
   <div style="float:left;" class="spinner-margin">
     <mat-progress-spinner diameter="35" [mode]="uploadMode" class="inline-items">
     </mat-progress-spinner>

@@ -21,7 +21,7 @@ export class ItemsComponent implements OnInit {
 
   @Input('columns') displayedColumns = ['name', 'price', 'delete'];
 
-  @Input('item-name') itemName: string = 'materials';
+  @Input('item-name') itemName: string;
 
   @ViewChild('inputCsv') inputCsv: ElementRef;
 
@@ -117,12 +117,36 @@ export class ItemsComponent implements OnInit {
   }
 
   public async deleteItem(itemId: string) {
+    let message: string = 'Arquivo enviado com sucesso';
+    const action: string = 'OK';
+    let config = new MatSnackBarConfig();
+    config.panelClass = ['success'];
+
     const token = this.getToken();
 
     try {
       await this.service.deleteItem(itemId, token, this.itemName);
     } catch (error) {
-      throw error;
+      config.panelClass = ['fail']
+      config.duration = 10000;
+      switch (error.status) {
+        case 401:
+          message = 'Há um problema com seu token';
+          this.authService.clearToken();
+          this.router.navigate([Constants.ROUTES.LOGIN]);
+          break;
+        case 400:
+          message = 'Há um problema com seu arquivo';
+          break;
+        case 500:
+          message = 'Houve um erro interno, favor verifique o arquivo ou tente novamente';
+          break;
+        default:
+          message = 'Houve um erro';
+          break;
+      }
     }
+
+    this.snackBar.open(message, action, config);
   }
 }
