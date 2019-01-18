@@ -71,11 +71,16 @@ export class ItemsComponent implements OnInit {
     const token = this.getToken();
     const fileToUpload = files.item(0);
 
+    let success = true;
+
     try {
       await this.service.postFile(fileToUpload, token, this.itemName);
     } catch (error) {
+      success = false;
+      
       config.panelClass = ['fail']
       config.duration = 10000;
+      
       switch (error.status) {
         case 401:
           message = 'Há um problema com seu token';
@@ -97,6 +102,12 @@ export class ItemsComponent implements OnInit {
     this.snackBar.open(message, action, config);
 
     this.uploadMode = 'determinate';
+
+    if (!success) return;
+
+    await this.delay(2000);
+
+    window.location.reload();
   }
 
   private getItemsList(index, max) {
@@ -117,18 +128,23 @@ export class ItemsComponent implements OnInit {
   }
 
   public async deleteItem(itemId: string) {
-    let message: string = 'Arquivo enviado com sucesso';
+    let message: string = `Item deletado com sucesso ${itemId}`;
     const action: string = 'OK';
     let config = new MatSnackBarConfig();
     config.panelClass = ['success'];
 
     const token = this.getToken();
 
+    let success = true;
+
     try {
       await this.service.deleteItem(itemId, token, this.itemName);
     } catch (error) {
+      success = false;
+
       config.panelClass = ['fail']
       config.duration = 10000;
+
       switch (error.status) {
         case 401:
           message = 'Há um problema com seu token';
@@ -136,10 +152,13 @@ export class ItemsComponent implements OnInit {
           this.router.navigate([Constants.ROUTES.LOGIN]);
           break;
         case 400:
-          message = 'Há um problema com seu arquivo';
+          message = 'Há um erro com o item';
+          break;
+        case 404:
+          message = 'Item não encontrado';
           break;
         case 500:
-          message = 'Houve um erro interno, favor verifique o arquivo ou tente novamente';
+          message = 'Houve um erro interno';
           break;
         default:
           message = 'Houve um erro';
@@ -148,5 +167,17 @@ export class ItemsComponent implements OnInit {
     }
 
     this.snackBar.open(message, action, config);
+
+    if (!success) return;
+
+    await this.delay(2000);
+
+    window.location.reload();
+  }
+
+  private delay(time: number) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, time);
+    });
   }
 }
