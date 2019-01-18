@@ -26,11 +26,14 @@ export class ItemsComponent implements OnInit {
   @ViewChild('inputCsv') inputCsv: ElementRef;
 
   public listSize: number;
-  public pageSize: number = 10;
+  public pageSize: number = 5;
   public shownList: Item[];
+
+  private currentPageSize: number = 5;
   private itemsList: Item[];
 
   uploadMode = 'determinate';
+  currentPageIndex: number;
 
   constructor(
     private service: ItemService,
@@ -43,12 +46,6 @@ export class ItemsComponent implements OnInit {
     return sessionStorage.getItem(Constants.TOKEN_HEADER);
   }
 
-  async ngOnInit() {
-    await this.initializeItems();
-
-    this.getItemsList(0, this.pageSize);
-  }
-
   private async initializeItems() {
     const token = this.getToken();
 
@@ -58,6 +55,47 @@ export class ItemsComponent implements OnInit {
     } catch (error) {
       throw error;
     }
+  }
+
+  private getItemsList(index, max) {
+    const endList: number = (index + 1) * max;
+    this.shownList = this.itemsList.slice(index, endList);
+  }
+
+  async ngOnInit() {
+    await this.initializeItems();
+
+    this.getItemsList(0, this.pageSize);
+  }
+
+  public openFileDialog(): void {
+    let event = new MouseEvent('click', { bubbles: false });
+    this.inputCsv.nativeElement.dispatchEvent(event);
+  }
+
+  private getPageIndex(id: string, size: number, list: Item[]): number{
+    let oldIndex = 0;
+
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      
+      if(item._id === id){
+        oldIndex = i;
+        break;
+      }
+    }
+
+    let newIndex = Math.floor(oldIndex / size) * size;
+    return newIndex;
+  }
+
+  public onPage($event) {
+    const size: number = $event.pageSize;
+    const index: number = $event.pageIndex;
+    
+    this.currentPageSize = size;
+    this.currentPageIndex = index;
+    this.getItemsList(index * size, size);
   }
 
   public async uploadFile(files: FileList) {
@@ -106,23 +144,8 @@ export class ItemsComponent implements OnInit {
     if (!success) return;
 
     await this.initializeItems();
-  }
 
-  private getItemsList(index, max) {
-    const endList: number = (index + 1) * max;
-    this.shownList = this.itemsList.slice(index, endList);
-  }
-
-  public openFileDialog(): void {
-    let event = new MouseEvent('click', { bubbles: false });
-    this.inputCsv.nativeElement.dispatchEvent(event);
-  }
-
-  public async onPage($event) {
-    const size: number = $event.pageSize;
-    const index: number = $event.pageIndex;
-
-    await this.getItemsList(index * size, size);
+    this.getItemsList(this.currentPageIndex, this.currentPageSize);
   }
 
   public async deleteItem(itemId: string) {
@@ -168,6 +191,14 @@ export class ItemsComponent implements OnInit {
 
     if (!success) return;
 
+    let newIndex = this.getPageIndex(
+      itemId, 
+      this.currentPageSize, 
+      this.itemsList
+    );
+
     await this.initializeItems();
+
+    this.getItemsList(newIndex, this.currentPageSize);
   }
 }
