@@ -105,9 +105,7 @@ export class ItemsComponent implements OnInit {
 
     if (!success) return;
 
-    await this.delay(2000);
-
-    window.location.reload();
+    await this.initializeItems();
   }
 
   private getItemsList(index, max) {
@@ -170,14 +168,6 @@ export class ItemsComponent implements OnInit {
 
     if (!success) return;
 
-    await this.delay(2000);
-
-    window.location.reload();
-  }
-
-  private delay(time: number) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, time);
-    });
+    await this.initializeItems();
   }
 }
