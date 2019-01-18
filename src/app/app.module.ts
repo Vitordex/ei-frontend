@@ -33,16 +33,21 @@ import { Constants } from 'src/constants';
 
 const routes: Route[] = [
   {
-    path: Constants.ROUTES.CHANGE_PASSWORD, component: ChangePasswordFormComponent
+    path: Constants.ROUTES.CHANGE_PASSWORD, 
+    component: ChangePasswordFormComponent
   },
   {
-    path: Constants.ROUTES.ITEMS, component: ItemsComponent, canActivate: [AuthGuardService]
+    path: Constants.ROUTES.ITEMS, 
+    component: ItemsPageComponent, 
+    canActivate: [AuthGuardService]
   },
   {
-    path: Constants.ROUTES.LOGIN, component: LoginComponent
+    path: Constants.ROUTES.LOGIN, 
+    component: LoginComponent
   },
   {
-    path: Constants.ROUTES.ALL, component: NotFoundComponent
+    path: Constants.ROUTES.ALL, 
+    component: NotFoundComponent
   }
 ];
 
