@@ -28,7 +28,9 @@ export class ChangePasswordFormComponent implements OnInit {
   confirmControl = new FormControl('', [
     Validators.required,
     CustomValidators.equal(this.passwordControl)
-  ])
+  ]);
+
+  changedPassword = false;
 
   constructor(
     private service: AuthService,
@@ -62,14 +64,19 @@ export class ChangePasswordFormComponent implements OnInit {
     let config = new MatSnackBarConfig();
     config.panelClass = ['success'];
 
+    let success = true;
+
     try {
       await this.service.patchRecoverPassword(
         this.passwordControl.value,
         this.authToken
       ).toPromise();
     } catch (error) {
+      success = false;
+
       config.panelClass = ['fail']
       config.duration = 10000;
+      
       switch (error.status) {
         case 401:
           message = 'Há um problema com seu token';
@@ -89,5 +96,7 @@ export class ChangePasswordFormComponent implements OnInit {
     this.snackBar.open(message, action, config);
 
     this.mode = 'determinate';
+
+    this.changedPassword = true;
   }
 }
