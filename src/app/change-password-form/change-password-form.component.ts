@@ -30,7 +30,9 @@ export class ChangePasswordFormComponent implements OnInit {
     CustomValidators.equal(this.passwordControl)
   ]);
 
-  changedPassword = false;
+  changedPassword: boolean = false;
+
+  origin: string = window.location.origin;
 
   constructor(
     private service: AuthService,
@@ -97,6 +99,6 @@ export class ChangePasswordFormComponent implements OnInit {
 
     this.mode = 'determinate';
 
-    this.changedPassword = true;
+    this.changedPassword = success;
   }
 }
