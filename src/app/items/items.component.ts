@@ -143,7 +143,7 @@ export class ItemsComponent implements OnInit {
 
     if (!success) return;
 
-    this.router.navigate([Constants.ROUTES.ITEMS]);
+    window.location.reload();
   }
 
   public async deleteItem(itemId: string) {
@@ -189,6 +189,6 @@ export class ItemsComponent implements OnInit {
 
     if (!success) return;
 
-    this.router.navigate([Constants.ROUTES.ITEMS]);
+    window.location.reload();
   }
 }
