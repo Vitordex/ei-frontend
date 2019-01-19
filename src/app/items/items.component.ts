@@ -143,9 +143,7 @@ export class ItemsComponent implements OnInit {
 
     if (!success) return;
 
-    await this.initializeItems();
-
-    this.getItemsList(this.currentPageIndex, this.currentPageSize);
+    this.router.navigate([Constants.ROUTES.ITEMS]);
   }
 
   public async deleteItem(itemId: string) {
@@ -191,14 +189,6 @@ export class ItemsComponent implements OnInit {
 
     if (!success) return;
 
-    let newIndex = this.getPageIndex(
-      itemId, 
-      this.currentPageSize, 
-      this.itemsList
-    );
-
-    await this.initializeItems();
-
-    this.getItemsList(newIndex, this.currentPageSize);
+    this.router.navigate([Constants.ROUTES.ITEMS]);
   }
 }
