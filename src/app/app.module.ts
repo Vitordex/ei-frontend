@@ -30,6 +30,8 @@ import { AuthService } from './auth/auth.service';
 import { ItemService } from './items-services/item.service';
 import { ItemsPageComponent } from './items-page/items-page.component';
 import { Constants } from 'src/constants';
+import { EmailChangedComponent } from './email-changed/email-changed.component';
+import { EmailConfirmedComponent } from './email-confirmed/email-confirmed.component';
 
 const routes: Route[] = [
   {
@@ -46,6 +48,14 @@ const routes: Route[] = [
     component: LoginComponent
   },
   {
+    path: Constants.ROUTES.CHANGED_EMAIL,
+    component: EmailChangedComponent
+  },
+  {
+    path: Constants.ROUTES.EMAIL_CONFIRMED,
+    component: EmailConfirmedComponent
+  },
+  {
     path: Constants.ROUTES.ALL, 
     component: NotFoundComponent
   }
@@ -58,7 +68,9 @@ const routes: Route[] = [
     ItemsComponent,
     LoginComponent,
     NotFoundComponent,
-    ItemsPageComponent
+    ItemsPageComponent,
+    EmailChangedComponent,
+    EmailConfirmedComponent
   ],
   imports: [
     BrowserModule,
