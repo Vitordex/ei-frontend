@@ -12,7 +12,8 @@ import {
   MatPaginatorModule,
   MatTabsModule,
   MatBottomSheetModule,
-  MatTableModule
+  MatTableModule,
+  MatIconModule
 } from '@angular/material';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +33,7 @@ import { ItemsPageComponent } from './items-page/items-page.component';
 import { Constants } from 'src/constants';
 import { EmailChangedComponent } from './email-changed/email-changed.component';
 import { EmailConfirmedComponent } from './email-confirmed/email-confirmed.component';
+import { PasswordInputComponent } from './password-input/password-input.component';
 
 const routes: Route[] = [
   {
@@ -70,7 +72,8 @@ const routes: Route[] = [
     NotFoundComponent,
     ItemsPageComponent,
     EmailChangedComponent,
-    EmailConfirmedComponent
+    EmailConfirmedComponent,
+    PasswordInputComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +86,7 @@ const routes: Route[] = [
     MatSnackBarModule,
     MatPaginatorModule,
     MatTabsModule,
+    MatIconModule,
     MatBottomSheetModule,
     MatTableModule,
     ReactiveFormsModule,

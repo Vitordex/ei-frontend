@@ -16,7 +16,7 @@ export class CustomValidators {
     }
 
     public static atLeastOneSpecial(control: AbstractControl): IErrorObject | null {
-        const regex = /\W/ig;
+        const regex = /(\$|@|!|%|\*|\?|&)/ig;
         const errorName = 'hasno' + 'special';
 
         return CustomValidators.atLeast(

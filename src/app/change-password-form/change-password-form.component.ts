@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroupDirective, NgForm, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CustomValidators } from './custom-validators.directive';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig, ErrorStateMatcher } from '@angular/material';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -15,7 +15,12 @@ export class ChangePasswordFormComponent implements OnInit {
   validForm = false;
   authToken = '';
 
-  passwordControl = new FormControl('', [
+  public hidePassword = true;
+  public hideConfirm = true;
+
+  public submitting: boolean = false;
+
+  public passwordControl = new FormControl('', [
     Validators.required,
     Validators.maxLength(40),
     Validators.minLength(8),
@@ -25,14 +30,14 @@ export class ChangePasswordFormComponent implements OnInit {
     CustomValidators.atLeastOneNumber
   ]);
 
-  confirmControl = new FormControl('', [
+  public confirmControl = new FormControl('', [
     Validators.required,
     CustomValidators.equal(this.passwordControl)
   ]);
 
-  changedPassword: boolean = false;
+  public changedPassword: boolean = false;
 
-  origin: string = window.location.origin;
+  public origin: string = window.location.origin;
 
   constructor(
     private service: AuthService,
@@ -47,19 +52,27 @@ export class ChangePasswordFormComponent implements OnInit {
   }
 
   public validateForm() {
-    const inputsHasErrors =
-      this.confirmControl.errors != null ||
-      this.passwordControl.errors != null;
+    this.confirmControl.updateValueAndValidity();
+    this.passwordControl.updateValueAndValidity();
 
     const inputsDirty =
       this.passwordControl.dirty &&
       this.confirmControl.dirty;
 
-    this.validForm = !inputsHasErrors && inputsDirty;
+    const inputsHasErrors =
+      this.confirmControl.errors != null ||
+      this.passwordControl.errors != null;
+
+    const inputsInvalid =
+      this.passwordControl.invalid &&
+      this.confirmControl.invalid;
+
+    this.validForm = !inputsHasErrors && inputsDirty && !inputsInvalid;
   }
 
   public async onSend() {
     this.mode = 'indeterminate';
+    this.submitting = true;
 
     let message: string = 'Senha alterada com sucesso';
     const action: string = 'OK';
@@ -78,7 +91,7 @@ export class ChangePasswordFormComponent implements OnInit {
 
       config.panelClass = ['fail']
       config.duration = 10000;
-      
+
       switch (error.status) {
         case 401:
           message = 'Há um problema com seu token';
@@ -97,8 +110,22 @@ export class ChangePasswordFormComponent implements OnInit {
 
     this.snackBar.open(message, action, config);
 
+    this.submitting = false;
     this.mode = 'determinate';
 
     this.changedPassword = success;
+  }
+
+  public getErrorMessage(controlName: string) {
+    const control: FormControl = this[controlName];
+    return control.hasError('required') ? 'Digite uma senha' :
+      control.hasError('hasnospecial') ? 'A senha deve conter ao menos um caracter especial' :
+        control.hasError('hasnonumber') ? 'A senha deve conter ao menos um número' :
+          control.hasError('hasnouppercase') ? 'A senha deve conter ao menos uma letra maiúscula' :
+            control.hasError('hasnolowercase') ? 'A senha deve conter ao menos uma letra minúscula' :
+              control.hasError('maxlength') ? `A senha deve conter no máximo ${control.errors.maxlength.requiredLength} caracteres` :
+                control.hasError('minlength') ? `A senha deve conter no mínimo ${control.errors.minlength.requiredLength} caracteres` :
+                  control.hasError('different') ? 'Esta senha deve ser igual à anterior' :
+                    '';
   }
 }
