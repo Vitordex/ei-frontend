@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ei-change-password": {
+    "ei-frontend": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,13 +13,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ei-change-password",
+            "outputPath": "dist/ei-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/assets/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -57,18 +57,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ei-change-password:build"
+            "browserTarget": "ei-frontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ei-change-password:build:production"
+              "browserTarget": "ei-frontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ei-change-password:build"
+            "browserTarget": "ei-frontend:build"
           }
         },
         "test": {
@@ -83,7 +83,7 @@
             ],
             "scripts": [],
             "assets": [
-              "src/favicon.ico",
+              "src/assets/favicon.ico",
               "src/assets"
             ]
           }
@@ -115,7 +115,7 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ei-change-password:serve:production"
+              "devServerTarget": "ei-frontend:serve:production"
             }
           }
         },
@@ -131,5 +131,5 @@
       }
     }
   },
-  "defaultProject": "ei-change-password"
+  "defaultProject": "ei-frontend"
 }

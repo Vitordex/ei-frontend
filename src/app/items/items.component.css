@@ -1,0 +1,16 @@
+.uploadButton {
+    background-color: blue;
+}
+
+.center{
+    width: 75%;
+    margin: 10px auto;
+}
+
+.inline-items {
+    display: inline-block;
+}
+
+.spinner-margin {
+    margin: 5px 5px;
+}

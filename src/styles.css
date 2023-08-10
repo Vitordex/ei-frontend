@@ -1,1 +1,69 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+    background-color: #FF6700;
+}
+
+/*Snack bar configurations*/
+.success {
+    color: white;
+    background-color: #267f19;
+}
+
+.success .mat-simple-snackbar-action  {
+    color: white;
+}
+
+.fail {
+    color: white;
+    background-color: #a32e2a;
+}
+
+.fail .mat-simple-snackbar-action  {
+    color: white;
+}
+
+/* Forms */
+.main-div{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-form-card-image {
+    background-image: url('./assets/logo.png');
+    background-size: cover;
+}
+
+.form-card {
+    max-width: 400px;
+}
+
+.form-input-full-width {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.white-text {
+    color: white;
+}
+
+.expand-bottom {
+    margin-bottom: 35px;
+}
+
+.orange-action-button {
+    background-color: #FF6700;
+    color: white;
+}
+
+.center {
+    width: 75%;
+    margin: 10px auto;
+}
+
+.success-change-password-image {
+    background-image: url('./assets/success.png');
+}
